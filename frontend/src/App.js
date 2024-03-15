@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Post from "./components/Post";
 
 function Posting({ input, text }) {
   return (
@@ -39,6 +40,8 @@ function App() {
     <>
 
       <h1 className="myTitle">Hello</h1>
+
+      <Post />
 
       <form>
         <input placeholder="Name" value={inputValue} onChange={handleInputChange} />
