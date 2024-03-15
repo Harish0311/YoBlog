@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import Post from "./components/Post";
+import getRandomColor from "./components/getRandomColor";
 
-function Posting({ input, text }) {
-  return (
-    <div style={{ border: '1px solid black', padding: '10px', margin: '10px' }}>
-      <h2>{input} says {text}</h2>
-    </div>
-  );
-
-}
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -23,8 +16,9 @@ function App() {
   }
 
   const handleButtonClick = () => {
-    const newPost = { input: inputValue, text: textValue };
+    const newPost = { input: inputValue, text: textValue ,color: getRandomColor()};
     setPostedContent(prevContent => [...prevContent, newPost])
+  
 
   }
 
@@ -41,7 +35,7 @@ function App() {
 
       <h1 className="myTitle">Hello</h1>
 
-      <Post />
+    
 
       <form>
         <input placeholder="Name" value={inputValue} onChange={handleInputChange} />
@@ -55,7 +49,8 @@ function App() {
       <Counter initialValue={0} /> */}
 
       {postedContent.map((post, index) => (
-        <Posting key={index} input={post.input} text={post.text} />
+        // <Posting key={index} input={post.input} text={post.text} />
+        <Post key={index} input={post.input} text={post.text} color = {post.color}/>
       ))}
     </>
   )
