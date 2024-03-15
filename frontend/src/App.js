@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Post from "./components/Post";
 import getRandomColor from "./components/getRandomColor";
-
+import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import { Button, Container } from "@mui/material";
+import PrimarySearchAppBar from "./components/Appbar";
 
 
 function App() {
@@ -43,9 +44,17 @@ function App() {
   // )
 
   return (
+    <>
+    <PrimarySearchAppBar></PrimarySearchAppBar>
     <Container>
 
-      <h1 className="myTitle">Hello</h1>
+
+<br></br>
+<br></br>
+
+      <Typography variant="h3" gutterBottom color="primary">
+        Welcome!
+      </Typography>
 
 
 
@@ -59,7 +68,7 @@ function App() {
           <TextField multiline rows={4}
             InputProps={{
               style: { backgroundColor: 'white' }
-            }} label="Name" value={inputValue} onChange={handleInputChange} placeholder="Say something..." label="Content" value={textValue} onChange={handleTextChange} /></div>
+            }}  placeholder="Say something..." label="Content" value={textValue} onChange={handleTextChange} /></div>
       </form>
       <br />
       <br />
@@ -80,6 +89,7 @@ function App() {
         <Post key={index} input={post.input} text={post.text} color={post.color} />
       ))}
     </Container>
+    </>
   )
 }
 
