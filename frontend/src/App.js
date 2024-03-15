@@ -1,28 +1,37 @@
 import React, { useState } from "react";
+import Counter from './Counter';
+// import Posting from "./Posting";
 
-function Counter(props) {
-  // const hookOuput = useState(props.initialValue)
-  // const myCount = hookOuput[0]
-  // const setMyCount = hookOuput[1];
-  const [myCount, setMyCount] = useState(props.initialValue)
-
-  function increment() {
-    if (props.reverse) {
-      setMyCount(myCount - 1)
-    } else {
-      setMyCount(myCount + 1)
-    }
-  }
+function Posting({Input,Text}) {
 
   return (
-    <div>
-      The counter is {myCount}
-      <button onClick={increment}>{props.reverse ? "Decrement" : "Increment"}</button>
-    </div>
-  )
+    
+      <div style={{ border: '1px solid black', padding: '10px', margin: '10px' }}>
+        <h2>{Input} says {Text}</h2>
+
+      </div>
+    );
+
 }
 
 function App() {
+const [InputValue,setInputValue]= useState();
+const [TextValue,setTextValue] = useState();
+const [postedContent, setPostedContent] = useState([]);
+
+const handleInputChange = (event) =>{
+  setInputValue(event.target.value)
+}
+const handleTextChange = (event) =>{
+  setTextValue(event.target.value)
+}
+
+const handleButtonClick = () =>{
+  const newPost = { input: InputValue,text: TextValue };
+  setPostedContent(PrevContent => [...PrevContent,newPost])
+  
+}
+
 
   // return React.createElement(React.Fragment, {},
   //   React.createElement("h1", { className: "myTitle" }, "Hello"),
@@ -33,10 +42,23 @@ function App() {
 
   return (
     <>
+
       <h1 className="myTitle">Hello</h1>
+
+      <form>
+        <input placeholder="Name" value={InputValue} onChange={handleInputChange}/>
+        <textarea placeholder="Say something..." value={TextValue} onChange={handleTextChange} />
+      </form>
+      <div>
+        <button onClick={handleButtonClick}>Post</button>
+      </div>
       <Counter initialValue={12} />
       <Counter initialValue={15} reverse />
       <Counter initialValue={0} />
+
+      {postedContent.map((post, index) => (
+        <Posting key={index} Input={post.input} Text={post.text} />
+      ))}
     </>
   )
 }
