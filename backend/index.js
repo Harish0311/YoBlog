@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser= require("body-parser");
+const cors = require('cors');
 
 const app= express()
 app.use(bodyParser.json())
+app.use(cors());
 var post =[{input: "Harish", text: "Hello there! ", color: "#ff0000",postId: "abcd"}]
 
 app.get('/post',(req,res)=>{

@@ -24,6 +24,11 @@ function App() {
   const handleTextChange = (event) => {
     setTextValue(event.target.value)
   }
+  fetch('http://localhost:2000/post')
+    .then(response=>response.json())
+    .then(post =>{
+      dispatch(addPost(post))
+    })
 
   const handleButtonClick = () => {
     if (inputValue !== "" && textValue !== "") {
