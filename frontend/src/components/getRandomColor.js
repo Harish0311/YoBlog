@@ -1,4 +1,4 @@
-import React from "react";
+
 function getRandomColor() {
     // Generate random RGB values
     const r = Math.floor(Math.random() * 256);

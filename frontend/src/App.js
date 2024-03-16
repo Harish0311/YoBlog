@@ -21,14 +21,14 @@ function App() {
   }
 
   const handleButtonClick = () => {
-    if (inputValue != "" && textValue != "") {
+    if (inputValue !== "" && textValue !== "") {
       const newPost = { input: inputValue, text: textValue, color: getRandomColor() };
       setPostedContent(prevContent => [...prevContent, newPost])
     }
-    else if (inputValue == "") {
+    else if (inputValue === "") {
       alert("Please type your name before posting!!!")
     }
-    else if (textValue == "") {
+    else if (textValue === "") {
       alert("Please type something before posting!!!")
     }
 
