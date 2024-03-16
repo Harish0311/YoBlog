@@ -41,6 +41,12 @@ export default function Post(props) {
   const dispatch = useDispatch();
 
   const handleDeletion = () => {
+    fetch('http://localhost:2000/post?postId='+props.postId,{
+        method: "DELETE",
+        headers:{
+          "Content-Type": "application/json"
+        }
+      })
     dispatch(deletePost(props.postId))
     handleCloseDialog();
   }
@@ -52,6 +58,7 @@ export default function Post(props) {
   }
 
   const handleopenEditDialog = () => {
+   
     setopenEditDialog(true);
     handleCloseDialog();
   }
@@ -65,6 +72,13 @@ export default function Post(props) {
   }
 
   const handleButtonClick=()=>{
+    fetch('http://localhost:2000/post',{
+      method: "PATCH",
+      body: JSON.stringify({text: updatedContent, postId:props.postId}),
+      headers:{
+        "Content-Type": "application/json"
+      }
+    })
     handlecloseEditDialog();
     dispatch(editPost(props.postId,updatedContent))
   }

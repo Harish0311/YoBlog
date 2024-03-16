@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { ADD_POST, DELETE_POST, EDIT_POST } from "./action";
+import { ADD_BULK_POST, ADD_POST, DELETE_POST, EDIT_POST } from "./action";
 
 
 
@@ -14,7 +14,7 @@ const postedContentReducer = (state = initialState, action) => {
         case ADD_POST:
             return{
                 ...state,
-                postedContent:[...state.postedContent, action.payload]
+                postedContent:[ action.payload, ...state.postedContent]
             }
 
         case DELETE_POST:
@@ -33,7 +33,11 @@ const postedContentReducer = (state = initialState, action) => {
                 return post 
                })
            }
-
+        case ADD_BULK_POST:
+            return{
+                ...state,
+                postedContent:action.payload
+            }
         default:
             return state;
     }

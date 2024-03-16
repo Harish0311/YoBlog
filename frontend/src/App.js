@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./components/Post";
 import getRandomColor from "./components/getRandomColor";
 import Typography from '@mui/material/Typography';
@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import { Button, Container } from "@mui/material";
 import {useDispatch,useSelector} from 'react-redux'
-import { addPost } from "./store/action";
+import { addPost,addBulkPost } from "./store/action";
 import PrimarySearchAppBar from "./components/Appbar";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -24,17 +24,26 @@ function App() {
   const handleTextChange = (event) => {
     setTextValue(event.target.value)
   }
-  fetch('http://localhost:2000/post')
+  useEffect(()=>{
+    fetch('http://localhost:2000/post')
     .then(response=>response.json())
     .then(post =>{
-      dispatch(addPost(post))
+      dispatch(addBulkPost(post))
     })
+  },[])
 
   const handleButtonClick = () => {
     if (inputValue !== "" && textValue !== "") {
       const newPost = { input: inputValue, text: textValue, color: getRandomColor(),postId: uuidv4() };
       // setPostedContent(prevContent => [...prevContent, newPost])
       dispatch(addPost(newPost))
+      fetch('http://localhost:2000/post',{
+        method: "POST",
+        body: JSON.stringify(newPost),
+        headers:{
+          "Content-Type": "application/json"
+        }
+      })
     }
     else if (inputValue === "") {
       alert("Please type your name before posting!!!")
