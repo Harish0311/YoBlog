@@ -1,5 +1,6 @@
 import React from 'react';
 // import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -15,8 +16,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import { MenuItem } from '@mui/material';
-
+import { Button, MenuItem } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { deletePost, editPost } from '../store/action';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 // const ExpandMore = styled((props) => {
@@ -33,12 +36,40 @@ import { MenuItem } from '@mui/material';
 export default function Post(props) {
 
   const [openDialog, setOpenDialog] = React.useState(false);
-  const handleOpenDialog = () =>{
+  const [openEditDialog, setopenEditDialog] = React.useState(false);
+  const [updatedContent,setupdatedContent] = React.useState(props.text)
+  const dispatch = useDispatch();
+
+  const handleDeletion = () => {
+    dispatch(deletePost(props.postId))
+    handleCloseDialog();
+  }
+  const handleOpenDialog = () => {
     setOpenDialog(true);
   }
-  const handleCloseDialog = () =>{
+  const handleCloseDialog = () => {
     setOpenDialog(false);
   }
+
+  const handleopenEditDialog = () => {
+    setopenEditDialog(true);
+    handleCloseDialog();
+  }
+  const handlecloseEditDialog = () => {
+    setopenEditDialog(false);
+    handleCloseDialog();
+  }
+
+  const handleTextChange=(event)=>{
+    setupdatedContent(event.target.value);
+  }
+
+  const handleButtonClick=()=>{
+    handlecloseEditDialog();
+    dispatch(editPost(props.postId,updatedContent))
+  }
+
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -51,10 +82,10 @@ export default function Post(props) {
           <IconButton aria-label="settings" onClick={handleOpenDialog}>
             <MoreVertIcon />
           </IconButton>
-          
-      
+
+
         }
-        title= {props.input}
+        title={props.input}
         subheader="September 14, 2016"
       />
       <CardContent>
@@ -69,20 +100,42 @@ export default function Post(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-       
+
       </CardActions>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-          {/* <DialogTitle>MoreOptions</DialogTitle> */}
+        {/* <DialogTitle>MoreOptions</DialogTitle> */}
 
-          <DialogContent>
-            {/* Settings content */}
-          <MenuItem onClick={handleCloseDialog}><EditIcon/>Edit</MenuItem>
-        <MenuItem onClick={handleCloseDialog}><DeleteIcon/>Delete</MenuItem>
-        
-          </DialogContent>
-          <DialogActions>
-          </DialogActions>
-        </Dialog>
+        <DialogContent>
+          {/* Settings content */}
+          <MenuItem onClick={handleopenEditDialog}><EditIcon />Edit</MenuItem>
+          <MenuItem onClick={handleDeletion}><DeleteIcon />Delete</MenuItem>
+
+        </DialogContent>
+        <DialogActions>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openEditDialog} onClose={handlecloseEditDialog}>
+        {/* <DialogTitle>MoreOptions</DialogTitle> */}
+
+        <DialogContent>
+          {/* Settings content */}
+          <TextField
+          id="outlined-multiline-static"
+          label="Multiline"
+          multiline
+          rows={4}
+          onChange={handleTextChange}
+          value={updatedContent}
+        />
+        <Button variant="contained" onClick={handleButtonClick} endIcon={<SaveIcon />}>
+          Save
+        </Button>
+
+
+        </DialogContent>
+        <DialogActions>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }

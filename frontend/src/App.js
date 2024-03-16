@@ -8,6 +8,7 @@ import { Button, Container } from "@mui/material";
 import {useDispatch,useSelector} from 'react-redux'
 import { addPost } from "./store/action";
 import PrimarySearchAppBar from "./components/Appbar";
+import { v4 as uuidv4 } from 'uuid';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [textValue, setTextValue] = useState("");
   // const [postedContent, setPostedContent] = useState([]);
-  const postedContent= useSelector(state => state.postedContent);
+  const postedContent= useSelector(state => state.postReducer.postedContent);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value)
@@ -26,7 +27,7 @@ function App() {
 
   const handleButtonClick = () => {
     if (inputValue !== "" && textValue !== "") {
-      const newPost = { input: inputValue, text: textValue, color: getRandomColor() };
+      const newPost = { input: inputValue, text: textValue, color: getRandomColor(),postId: uuidv4() };
       // setPostedContent(prevContent => [...prevContent, newPost])
       dispatch(addPost(newPost))
     }
@@ -93,7 +94,7 @@ function App() {
       
         // <Posting key={index} input={post.input} text={post.text} />
         <div>
-        <Post key={index} input={post.input} text={post.text} color={post.color} />
+        <Post key={index} input={post.input} text={post.text} color={post.color} postId={post.postId}  />
         <br/>
         </div>
               ))}
