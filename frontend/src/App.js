@@ -85,9 +85,14 @@ function App() {
       <Counter initialValue={0} /> */}
 
       {postedContent.map((post, index) => (
+      
         // <Posting key={index} input={post.input} text={post.text} />
+        <div>
         <Post key={index} input={post.input} text={post.text} color={post.color} />
-      ))}
+        <br/>
+        </div>
+              ))}
+              
     </Container>
     </>
   )
