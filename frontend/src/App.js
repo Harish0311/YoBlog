@@ -5,13 +5,17 @@ import Typography from '@mui/material/Typography';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import { Button, Container } from "@mui/material";
+import {useDispatch,useSelector} from 'react-redux'
+import { addPost } from "./store/action";
 import PrimarySearchAppBar from "./components/Appbar";
 
 
 function App() {
+  const dispatch = useDispatch()
   const [inputValue, setInputValue] = useState("");
   const [textValue, setTextValue] = useState("");
-  const [postedContent, setPostedContent] = useState([]);
+  // const [postedContent, setPostedContent] = useState([]);
+  const postedContent= useSelector(state => state.postedContent);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value)
@@ -23,7 +27,8 @@ function App() {
   const handleButtonClick = () => {
     if (inputValue !== "" && textValue !== "") {
       const newPost = { input: inputValue, text: textValue, color: getRandomColor() };
-      setPostedContent(prevContent => [...prevContent, newPost])
+      // setPostedContent(prevContent => [...prevContent, newPost])
+      dispatch(addPost(newPost))
     }
     else if (inputValue === "") {
       alert("Please type your name before posting!!!")
