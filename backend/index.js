@@ -14,16 +14,6 @@ const pool = mysql.createPool({
     password: 'H@rish123'
 });
 
-// Test the connection
-// pool.query('SELECT * FROM Card_Data', (err, results, fields) => {
-//     if (err) {
-//         console.error('Error executing query:', err);
-//         return;
-//     }
-//     post = results;
-//     // console.log('Query results:', results);
-// });
-
 app.get('/post',(req,res)=>{
     pool.query('SELECT * FROM Card_Data', (err, results, fields) => {
         if (err) {
@@ -32,8 +22,11 @@ app.get('/post',(req,res)=>{
         }
         post = results;
         // console.log('Query results:', results);
+        res.json(post)
+
     });
-    res.json(post)
+    // res.json(post)
+    // console.log("Backend gave the data",post)
 });
 
 app.post('/post',(req,res)=>{

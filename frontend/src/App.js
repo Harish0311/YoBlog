@@ -16,14 +16,6 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [textValue, setTextValue] = useState("");
   // const [postedContent, setPostedContent] = useState([]);
-  const postedContent= useSelector(state => state.postReducer.postedContent);
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value)
-  }
-  const handleTextChange = (event) => {
-    setTextValue(event.target.value)
-  }
   useEffect(()=>{
     fetch('http://localhost:2000/post')
     .then(response=>response.json())
@@ -31,6 +23,15 @@ function App() {
       dispatch(addBulkPost(post))
     })
   },[])
+
+  const postedContent= useSelector(state => state.postReducer.postedContent);
+console.log(postedContent)
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value)
+  }
+  const handleTextChange = (event) => {
+    setTextValue(event.target.value)
+  }
 
   const handleButtonClick = () => {
     if (inputValue !== "" && textValue !== "") {
