@@ -5,6 +5,15 @@ var mysql = require('mysql2');
 const app= express()
 const fs = require('fs')
 
+function getRandomColor() {
+    // Generate random RGB values
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    
+    // Construct the RGB color string
+    return `rgb(${r},${g},${b})`;
+  }
 
 app.use(bodyParser.json())
 app.use(cors());
@@ -78,16 +87,25 @@ app.delete('/post',(req,res)=>{
 })
 
 
-app.get('/auth',(req,res)=>{
-    pool.query('SELECT * FROM users',(err,results,fields)=>{
+app.post('/auth/create',(req,res)=>{
+    const {name,password}= req.body
+    pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
         if (err) {
-            console.error('Error executing query:', err);
-            return;
+            console.log(err);
+            return res.status(400).json("User already exists")
         }
-        post = results;
-        // console.log('Query results:', results);
-        res.json(post)
+        if(results.length<1){
+                pool.query('INSERT INTO users (name, password, color) VALUES (?, ?, ?)', [name,password, getRandomColor()], (err) => {
+                    console.log(err);
+                })
+                // send success response
+                res.json("User Successfully Created")
+        }else {
+            res.status(400).json("User already exists")
+            // send user already exist response with 400 status
+        }
     })
+    
 })
 
 
