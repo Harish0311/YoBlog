@@ -2,15 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Auth from './Auth';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/store'
+import {BrowserRouter, Route, Routes}from 'react-router-dom'
+import PrimarySearchAppBar from "./components/Appbar";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+    <PrimarySearchAppBar></PrimarySearchAppBar>
+      <BrowserRouter>
+      
+      <Routes>
+      <Route path='/' element={<App />}/>
+      <Route path='/auth' element={<Auth/>}/>
+      </Routes>
+    {/* <App /> */}
+    </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

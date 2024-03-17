@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import { Button, Container } from "@mui/material";
 import {useDispatch,useSelector} from 'react-redux'
 import { addPost,addBulkPost } from "./store/action";
-import PrimarySearchAppBar from "./components/Appbar";
+
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -65,7 +65,7 @@ function App() {
 
   return (
     <>
-    <PrimarySearchAppBar></PrimarySearchAppBar>
+    
     <Container>
 
 
