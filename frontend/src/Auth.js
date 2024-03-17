@@ -1,6 +1,99 @@
+import { Button, Container, Typography } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import { useEffect, useState } from "react";
+import { redirect, Route, Router} from 'react-router-dom'
 
 
-function Auth(){
+function Auth() {
+    const [username,setusername]= useState("");
+    const [password,setpassword]=useState("");
+    var [isauser,setisauser]=useState(false);
+    useEffect(() => {
+
+        if (isauser) {
+            redirect("/");
+        }
+    }, [isauser]);
+
+    const handlelogin=()=>{
+        fetch('http://localhost:2000/auth', {
+            method: "POST",
+            body:JSON.stringify({
+                username,
+                password
+            })
+        })
+        .then(response=> response.json())
+        .then(post=>{
+           const content= post.find(content=> content.name=== username )
+            if(content){
+                setisauser(true);
+                
+            }
+            console.log('Name:',content.name,'Is user: ',isauser)
+
+        })
+    }
+    const handlesignin=(event)=>{
+        var name = event.target.value
+    }
+    const handlenamechange=(event)=>{
+        setusername(event.target.value)
+    }
+
+    const handlepasswordchange=(event)=>{
+        setpassword(event.target.value)
+    }
+
+    return (
+        <>
+            <br />
+            <br />
+            <Container>
+                <Typography variant="h3" gutterBottom color="primary">
+                    Welcome!
+                </Typography>
+
+                <br />
+                <br />
+                <TextField
+                    id="outlined-name-input"
+                    label="Name"
+                    value={username}
+                    onChange={handlenamechange}
+                    InputProps={{
+                        style: { backgroundColor: 'white' }
+                    }}
+
+
+                />
+                <br />
+                <br />
+                <TextField
+                    id="outlined-password-input"
+                    label="Password"
+                    type="password"
+                    value ={password}
+                    onChange={handlepasswordchange}
+                    InputProps={{
+                        style: { backgroundColor: 'white' }
+                    }}
+
+                />
+                <br />
+                <br />
+                <Button variant="contained"
+                        onClick={handlelogin}>Login</Button>
+                {"  "}
+                <Button variant="outlined"
+                    onClick={handlesignin}
+                    style={{ backgroundColor: 'white' }}>Sign up</Button>
+                    
+                    
+            </Container>
+        </>
+
+    )
 
 }
 

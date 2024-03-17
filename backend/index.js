@@ -3,6 +3,9 @@ const bodyParser= require("body-parser");
 const cors = require('cors');
 var mysql = require('mysql2');
 const app= express()
+const fs = require('fs')
+
+
 app.use(bodyParser.json())
 app.use(cors());
 // var post =[{input: "Harish", text: "Hello there! ", color: "#ff0000",postId: "abcd"}]
@@ -13,6 +16,7 @@ const pool = mysql.createPool({
     database: 'YoBlog',
     password: 'H@rish123'
 });
+const sqlquery =fs.readFileSync('../sql/fetch-posts.sql','utf8')
 
 // Test the connection
 // pool.query('SELECT * FROM Card_Data', (err, results, fields) => {
@@ -32,8 +36,9 @@ app.get('/post',(req,res)=>{
         }
         post = results;
         // console.log('Query results:', results);
+        res.json(post)
     });
-    res.json(post)
+    
 });
 
 app.post('/post',(req,res)=>{
@@ -70,6 +75,19 @@ app.delete('/post',(req,res)=>{
     })
     // post = post.filter(Id=> Id.postId !== PostIdtoDelete)
     res.json("RIP")
+})
+
+
+app.get('/auth',(req,res)=>{
+    pool.query('SELECT * FROM users',(err,results,fields)=>{
+        if (err) {
+            console.error('Error executing query:', err);
+            return;
+        }
+        post = results;
+        // console.log('Query results:', results);
+        res.json(post)
+    })
 })
 
 

@@ -1,0 +1,16 @@
+POST /auth/login
+	- request body: username, password
+	- response: is valid or not/gives the user profile/ userId <- save this userid in localStorage
+
+POST /auth/createAccount
+	- request body: username, password
+	- create that account
+POST /auth/verifyUser
+	- request body: userId
+	- checks weather its a valid user/gives the user profile
+
+----------------
+
+Redux: authReducer
+- userId: number|null
+- profile: {name, color} | null
