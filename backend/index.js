@@ -3,7 +3,8 @@ const bodyParser= require("body-parser");
 const cors = require('cors');
 var mysql = require('mysql2');
 const app= express()
-const fs = require('fs')
+const fs = require('fs');
+const { log } = require("console");
 
 function getRandomColor() {
     // Generate random RGB values
@@ -92,7 +93,7 @@ app.post('/auth/create',(req,res)=>{
     pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
         if (err) {
             console.log(err);
-            return res.status(400).json("User already exists")
+            return res.status(400).json("Unable to process query!")
         }
         if(results.length<1){
                 pool.query('INSERT INTO users (name, password, color) VALUES (?, ?, ?)', [name,password, getRandomColor()], (err) => {
@@ -101,11 +102,29 @@ app.post('/auth/create',(req,res)=>{
                 // send success response
                 res.json("User Successfully Created")
         }else {
-            res.status(400).json("User already exists")
+            return res.status(400).json("User already exists");
             // send user already exist response with 400 status
         }
     })
     
+})
+
+app.post('/auth/login',(req,res)=>{
+    console.log('Works')
+    const {name,password}=req.body
+    pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
+        
+        if (err) {
+            console.log(err);
+            return res.status(400).json("Unable to process query!")
+        }
+        if(results.length<1){
+            return res.status(400).json("No such user exists!")
+        }else{
+            
+            return res.json([{id: 'results.id'}])
+        }
+    })
 })
 
 
