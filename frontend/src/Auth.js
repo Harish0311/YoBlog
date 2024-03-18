@@ -1,36 +1,26 @@
 import { Button, Container, Typography } from "@mui/material";
 import TextField from '@mui/material/TextField';
-import { useEffect, useState } from "react";
-import { redirect, Route, Router} from 'react-router-dom'
+import { useState } from "react";
+import { useNavigate} from 'react-router-dom'
 
 
 function Auth() {
     const [username,setusername]= useState("");
     const [password,setpassword]=useState("");
-    var [isauser,setisauser]=useState(false);
-    useEffect(() => {
-
-        if (isauser) {
-            redirect("/");
-        }
-    }, [isauser]);
+    let navigate = useNavigate();
 
     const handlelogin=()=>{
-        fetch('http://localhost:2000/auth', {
+
+        fetch('http://localhost:2000/auth/login', {
             method: "POST",
             body:JSON.stringify({
-                username,
-                password
+                name: username,
+                password: password
             })
         })
         .then(response=> response.json())
         .then(post=>{
-           const content= post.find(content=> content.name=== username )
-            if(content){
-                setisauser(true);
-                
-            }
-            console.log('Name:',content.name,'Is user: ',isauser)
+            console.log(post)
 
         })
     }

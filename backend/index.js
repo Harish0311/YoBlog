@@ -94,6 +94,7 @@ app.post('/auth/create',(req,res)=>{
         if (err) {
             console.log(err);
             return res.status(400).json("Unable to process query!")
+            
         }
         if(results.length<1){
                 pool.query('INSERT INTO users (name, password, color) VALUES (?, ?, ?)', [name,password, getRandomColor()], (err) => {
@@ -114,7 +115,7 @@ app.post('/auth/login',(req,res)=>{
     pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
         
         if (err) {
-            console.log(err);
+            console.log(name,password);
             return res.status(400).json("Unable to process query!")
         }
         if(results.length<1){
