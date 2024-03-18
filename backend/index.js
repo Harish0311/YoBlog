@@ -110,7 +110,6 @@ app.post('/auth/create',(req,res)=>{
 })
 
 app.post('/auth/login',(req,res)=>{
-    console.log('Works')
     const {name,password}=req.body
     pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
         
@@ -120,13 +119,31 @@ app.post('/auth/login',(req,res)=>{
         }
         if(results.length<1){
             return res.status(400).json("No such user exists!")
-        }else{
+        }
+        else{
+            if(results[0].password===password){
+                return res.json({id: results[0].id })
+            }
+            else{
+                return res.status(400).json("Wrong Password!")
+            }
             
-            return res.json([{id: 'results.id'}])
         }
     })
 })
 
+app.post('/auth/verify',(req,res)=>{
+    const id=parseInt(req.body.id)
+    console.log(id)
+    pool.query('SELECT * FROM users WHERE id = ?',id,(err,results)=>{
+        if(results.length<1){
+            return res.status(400).json("Invalid user")
+        }
+        else{
+            return res.json({name: results[0].name,color: results[0].color})
+        }
+    })
+})
 
 app.listen(2000)
 
