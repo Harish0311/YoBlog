@@ -13,6 +13,9 @@ function Auth() {
 
         fetch('http://localhost:2000/auth/login', {
             method: "POST",
+            headers: {
+                'Content-Type':'application/json'
+            },
             body:JSON.stringify({
                 name: username,
                 password: password
@@ -20,9 +23,12 @@ function Auth() {
         })
         .then(response=> response.json())
         .then(post=>{
-            console.log(post)
+            return console.log(post)
 
-        })
+        }).catch(error => {
+            console.error("Error:", error);
+
+        });
     }
     const handlesignin=(event)=>{
         var name = event.target.value

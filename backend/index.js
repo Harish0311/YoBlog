@@ -115,7 +115,7 @@ app.post('/auth/login',(req,res)=>{
     pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
         
         if (err) {
-            console.log(name,password);
+            console.log(name,password,err);
             return res.status(400).json("Unable to process query!")
         }
         if(results.length<1){
