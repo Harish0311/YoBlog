@@ -23,7 +23,16 @@ function Auth() {
         })
         .then(response=> response.json())
         .then(post=>{
-            return console.log(post)
+            console.log(post)
+            if(post === "No such user exists!"){
+                   return alert('Invalid username')
+            }
+            else if(post === "Wrong Password!"){
+                return alert('Invalid password')
+         }
+         else{
+            navigate('/home')
+         }
 
         }).catch(error => {
             console.error("Error:", error);
