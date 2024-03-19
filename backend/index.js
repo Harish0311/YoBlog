@@ -146,6 +146,16 @@ app.post('/auth/verify',(req,res)=>{
     })
 })
 
+app.get('/auth/login',(req,res)=>{
+    const id= parseInt(req.body.id)
+    if (isNaN(id)) {
+        return res.status(400).json({ error: 'Invalid user ID' });
+    }
+    pool.query('SELECT name,color FROM users WHERE id = ?',id,(err,results)=>{
+        return res.json({name: results.name,color: results.color})
+    })
+})
+
 app.listen(2000)
 
 

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import store from './store/store'
 import {BrowserRouter, Route, Routes}from 'react-router-dom'
 import PrimarySearchAppBar from "./components/Appbar";
+import User from './user';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,7 @@ root.render(
       <Routes>
       <Route path='/home' element={<App />}/>
       <Route path='/' element={<Auth/>}/>
+      <Route path='/user' element={<User/>}/>
       </Routes>
     {/* <App /> */}
     </BrowserRouter>
