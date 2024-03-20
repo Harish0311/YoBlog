@@ -23,7 +23,7 @@ function Auth() {
         })
         .then(response=> response.json())
         .then(post=>{
-            console.log(post)
+
             if (post === "No such user exists!"){
                    return alert('Invalid username')
             }
@@ -31,6 +31,7 @@ function Auth() {
                 return alert('Invalid password')
          }
          else{
+ 
             localStorage.setItem('id',post.id)
             navigate('/user')
          }
