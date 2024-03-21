@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   //New Stuff
   const id = localStorage.getItem('id')
+  console.log(id)
   const dispatch = useDispatch()
   
   
@@ -22,7 +23,7 @@ function App() {
   const [isloggedin,setisloggedin]= useState(false)
 
   useEffect(()=>{
-  
+  if (id !== null){
   fetch('http://localhost:2000/auth/verify',{
       method:'POST',
       headers:{
@@ -38,10 +39,9 @@ function App() {
       setname(post.name)
       setcolor(post.color)
   })
+  setisloggedin(true)
+}
 
-  if(id !== undefined){
-    setisloggedin(true)
-  }
 
   fetch('http://localhost:2000/post')
     .then(response=>response.json())
@@ -108,7 +108,7 @@ function App() {
 <br></br>
 
       <Typography variant="h3" gutterBottom color="primary">
-        Welcome!
+        Welcome {isloggedin ? `back, ${name}!` : "to our website!"}
       </Typography>
 
 

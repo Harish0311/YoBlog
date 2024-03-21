@@ -1,7 +1,7 @@
 import { Button, Container, Typography } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
-import { useNavigate} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 
 
 function Auth() {
@@ -108,7 +108,11 @@ function Auth() {
                 <Button variant="outlined"
                     onClick={handlesignin}
                     style={{ backgroundColor: 'white' }}>Sign up</Button>
-                    
+                <br/>
+                <br/>
+                <div>
+                <Link to="/home" onClick={()=>{localStorage.removeItem('id')}}> Use as Guest</Link>
+                </div>
                     
             </Container>
         </>
