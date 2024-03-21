@@ -12,7 +12,48 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 function App() {
+  //New Stuff
+  const id = localStorage.getItem('id')
   const dispatch = useDispatch()
+  
+  
+  const [name,setname]= useState('')
+  const [color,setcolor]=useState('')
+  const [isloggedin,setisloggedin]= useState(false)
+
+  useEffect(()=>{
+  
+  fetch('http://localhost:2000/auth/verify',{
+      method:'POST',
+      headers:{
+          'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+          id
+      })
+  })
+  .then(response=>response.json())
+  .then(post=>{
+      console.log(post)
+      setname(post.name)
+      setcolor(post.color)
+  })
+
+  if(id !== undefined){
+    setisloggedin(true)
+  }
+
+  fetch('http://localhost:2000/post')
+    .then(response=>response.json())
+    .then(post =>{
+      dispatch(addBulkPost(post))
+    })
+},[id,dispatch]
+  )
+
+
+// New Stuff
+  
   const [inputValue, setInputValue] = useState("");
   const [textValue, setTextValue] = useState("");
   // const [postedContent, setPostedContent] = useState([]);
@@ -24,13 +65,7 @@ function App() {
   const handleTextChange = (event) => {
     setTextValue(event.target.value)
   }
-  useEffect(()=>{
-    fetch('http://localhost:2000/post')
-    .then(response=>response.json())
-    .then(post =>{
-      dispatch(addBulkPost(post))
-    })
-  },[])
+
 
   const handleButtonClick = () => {
     if (inputValue !== "" && textValue !== "") {
@@ -79,10 +114,10 @@ function App() {
 
 
       <form>
-        <TextField placeholder="Eg.Harish" color="primary"
+        {!isloggedin && <TextField placeholder="Eg.Harish" color="primary"
           InputProps={{
             style: { backgroundColor: 'white' }
-          }} label="Name" value={inputValue} onChange={handleInputChange} />
+          }} label="Name" value={inputValue} onChange={handleInputChange} />}
         <br /><br />
         <div>
           <TextField multiline rows={4}

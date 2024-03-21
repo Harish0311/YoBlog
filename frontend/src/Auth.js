@@ -33,7 +33,7 @@ function Auth() {
          else{
  
             localStorage.setItem('id',post.id)
-            navigate('/user')
+            navigate('/home')
          }
 
         }).catch(error => {
@@ -41,8 +41,21 @@ function Auth() {
 
         });
     }
-    const handlesignin=(event)=>{
-        var name = event.target.value
+    const handlesignin=()=>{
+        fetch('http://localhost:2000/auth/create',{
+            method: "POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                name: username,
+                password
+            }
+            )
+        }).then(response=>response.json())
+        .then(post=>{
+            return alert(post)
+        })
     }
     const handlenamechange=(event)=>{
         setusername(event.target.value)

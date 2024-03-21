@@ -89,6 +89,7 @@ app.delete('/post',(req,res)=>{
 
 
 app.post('/auth/create',(req,res)=>{
+
     const {name,password}= req.body
     pool.query('SELECT * FROM users WHERE name = ?',name,(err,results)=>{
         if (err) {
