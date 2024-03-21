@@ -68,8 +68,8 @@ function App() {
 
 
   const handleButtonClick = () => {
-    if (inputValue !== "" && textValue !== "") {
-      const newPost = { input: inputValue, text: textValue, color: getRandomColor(),postId: uuidv4() };
+    if ((isloggedin || inputValue !== "") && textValue !== "") {
+      const newPost = { input: isloggedin? name : inputValue, text: textValue, color: isloggedin? color : getRandomColor(),postId: uuidv4() };
       // setPostedContent(prevContent => [...prevContent, newPost])
       dispatch(addPost(newPost))
       fetch('http://localhost:2000/post',{
@@ -80,7 +80,7 @@ function App() {
         }
       })
     }
-    else if (inputValue === "") {
+    else if (!isloggedin && inputValue === "") {
       alert("Please type your name before posting!!!")
     }
     else if (textValue === "") {
