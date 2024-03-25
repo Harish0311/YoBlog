@@ -20,7 +20,6 @@ root.render(
       <Routes>
       <Route path='/home' element={<App />}/>
       <Route path='/' element={<Auth/>}/>
-      <Route path='/user' element={<User/>}/>
       </Routes>
     {/* <App /> */}
     </BrowserRouter>

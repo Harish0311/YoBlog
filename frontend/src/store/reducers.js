@@ -8,6 +8,16 @@ const initialState = {
     postedContent: []
 }
 
+const initialAuthState = {
+    user: null,
+    isLoggedIn: false,
+  };
+
+  const authReducer = (state = initialAuthState, action) => {
+    // Handle action types related to authentication
+    return state;
+  };
+
 const postedContentReducer = (state = initialState, action) => {
 
     switch (action.type) {
