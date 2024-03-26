@@ -1,5 +1,6 @@
 # YoBlog 🥸
 
+A free speech app to voice your opinion
 
 ## Screenshots:
 
