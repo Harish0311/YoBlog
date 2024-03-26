@@ -42,6 +42,9 @@ function Auth() {
         });
     }
     const handlesignin=()=>{
+        if(username=== '' || password === ''){
+            return alert('Incomplete Data')
+        }
         fetch('http://localhost:2000/auth/create',{
             method: "POST",
             headers:{

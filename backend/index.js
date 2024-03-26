@@ -102,7 +102,7 @@ app.post('/auth/create',(req,res)=>{
                     console.log(err);
                 })
                 // send success response
-                res.json("User Successfully Created")
+              return  res.json("User Successfully Created")
         }else {
             return res.status(400).json("User already exists");
             // send user already exist response with 400 status
