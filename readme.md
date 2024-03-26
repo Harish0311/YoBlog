@@ -19,7 +19,7 @@ cd backend
 node index.js
 ```
 
-Visit ```http://localhost:3000/``` to view the site
+Visit ```http://localhost:3000/``` to view the site 
 
 ## Screenshots:
 
