@@ -191,7 +191,10 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {location.pathname==='/home'&&<Button variant='outlined' style={{background:'white'}}
-              onClick={()=>{navigate('/')}}
+              onClick={()=>{
+                localStorage.removeItem('id')
+                navigate('/');
+              }}
               >Log out</Button>}
             {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="error">
