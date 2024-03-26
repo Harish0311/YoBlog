@@ -16,7 +16,8 @@ import Menu from '@mui/material/Menu';
 // import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
-
+import {useNavigate} from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 // const Search = styled('div')(({ theme }) => ({
 //   position: 'relative',
 //   borderRadius: theme.shape.borderRadius,
@@ -58,6 +59,8 @@ import { Button } from '@mui/material';
 // }));
 
 export default function PrimarySearchAppBar() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -187,7 +190,9 @@ export default function PrimarySearchAppBar() {
           </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Button variant='outlined' style={{background:'white'}}>Log out</Button>
+            {location.pathname==='/home'&&<Button variant='outlined' style={{background:'white'}}
+              onClick={()=>{navigate('/')}}
+              >Log out</Button>}
             {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="error">
                 <MailIcon />
