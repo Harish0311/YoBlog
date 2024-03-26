@@ -65,7 +65,13 @@ function App() {
   const handleTextChange = (event) => {
     setTextValue(event.target.value)
   }
-
+  useEffect(()=>{
+    fetch('http://localhost:2000/post')
+    .then(response=>response.json())
+    .then(post =>{
+      dispatch(addBulkPost(post))
+    })
+  },[])
 
   const handleButtonClick = () => {
     if ((isloggedin || inputValue !== "") && textValue !== "") {
